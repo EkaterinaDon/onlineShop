@@ -23,24 +23,24 @@ class RequestFactory {
     }()
     
     let sessionQueue = DispatchQueue.global(qos: .utility)
-    
+    let baseUrl = URL(string: "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/")!
     func makeAuthRequestFatory() -> AuthRequestFactory {
         let errorParser = makeErrorParser()
-        return Auth(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue)
+        return Auth(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
     
     func makeRegisterRequestFatory() -> RegisterRequestFactory {
         let errorParser = makeErrorParser()
-        return Register(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue)
+        return Register(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
     
     func makeLogoutRequestFatory() -> LogoutRequestFactory {
         let errorParser = makeErrorParser()
-        return Logout(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue)
+        return Logout(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
     
     func makeChangeDataRequestFatory() -> ChangeDataRequestFactory {
         let errorParser = makeErrorParser()
-        return ChangeData(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue)
+        return ChangeData(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
 }
