@@ -6,28 +6,117 @@
 //
 
 import XCTest
+import Alamofire
 @testable import GBShop
 
 class GBShopTests: XCTestCase {
-
+    
+    var requestFactory: RequestFactory?
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        requestFactory = RequestFactory()
     }
-
+    
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        requestFactory = nil
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testAuth() {
+        let expectation = self.expectation(description: "Авторизация успешна")
+        let requestFactory = RequestFactory()
+        let auth = requestFactory.makeAuthRequestFactory()
+        auth.login(userName: "123", password: "mypassword") { response in
+            switch response.result {
+            case .success(let login):
+                XCTAssertEqual(login.user.id, 123)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
         }
+        waitForExpectations(timeout: 10, handler: nil)
     }
-
+    
+    func testRegistration() {
+        let expectation = self.expectation(description: "Регистрация успешна")
+        let requestFactory = RequestFactory()
+        let register = requestFactory.makeRegisterRequestFactory()
+        register.registration(userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: "m", cardNumber: "9872389-2424-234224-234", comment: "Hello") { response in
+            switch response.result {
+            case .success(let register):
+                XCTAssertEqual(register.result, 1)
+                //XCTAssert(true, register.userMessage)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testLogout() {
+        let expectation = self.expectation(description: "Выход успешен")
+        let requestFactory = RequestFactory()
+        let logout = requestFactory.makeLogoutRequestFactory()
+        logout.logout(id: 123) { response in
+            switch response.result {
+            case .success(let logout):
+                XCTAssertEqual(logout.result, 1)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testChangeData() {
+        let expectation = self.expectation(description: "Смена данных успешна")
+        let requestFactory = RequestFactory()
+        let change = requestFactory.makeChangeDataRequestFactory()
+        change.changeData(userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: "m", cardNumber: "9872389-2424-234224-234", comment: "Hello") { response in
+            switch response.result {
+            case .success(let success):
+                XCTAssertEqual(success.result, 1)
+                //XCTAssert(true, success.result.description)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testCatalogData() {
+        let expectation = self.expectation(description: "Получение каталога прошло успешно")
+        let requestFactory = RequestFactory()
+        let catalog = requestFactory.makeCatalogDataRequestFactory()
+        catalog.getCatalogData(pageNumber: 1, idCategory: 1) { response in
+            switch response.result {
+            case .success(let catalog):
+                XCTAssert(true, catalog.description)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testProduct() {
+        let expectation = self.expectation(description: "Получение товара")
+        let requestFactory = RequestFactory()
+        let product = requestFactory.makeProductRequestFactory()
+        product.getProductBy(id: 1) { response in
+            switch response.result {
+            case .success(let product):
+                XCTAssertEqual(product.result, 1)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
 }
