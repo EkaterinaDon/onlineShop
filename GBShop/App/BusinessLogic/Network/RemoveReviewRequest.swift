@@ -1,14 +1,14 @@
 //
-//  ProductRequest.swift
+//  RemoveReviewRequest.swift
 //  GBShop
 //
-//  Created by Ekaterina on 14.04.21.
+//  Created by Ekaterina on 21.04.21.
 //
 
 import Foundation
 import Alamofire
 
-class ProductRequest: AbstractRequestFactory {
+class RemoveReviewRequest: AbstractRequestFactory {
     let errorParser: AbstractErrorParser
     let sessionManager: Session
     let queue: DispatchQueue
@@ -23,24 +23,25 @@ class ProductRequest: AbstractRequestFactory {
         self.queue = queue
         self.baseUrl = baseUrl
     }
+    
 }
 
-extension ProductRequest: ProductRequestFactory {
-    func getProductBy(id: Int, completionHandler: @escaping (AFDataResponse<ProductResult>) -> Void) {
-        let requestModel = ProductRequest(baseUrl: baseUrl, idProduct: id)
+extension RemoveReviewRequest: RemoveReviewRequestFactory {
+    func removeReview(id: Int, completionHandler: @escaping (AFDataResponse<RemoveReviewResult>) -> Void) {
+        let requestModel = RemoveReviewRequest(baseUrl: baseUrl, idReview: id)
         self.request(request: requestModel, completionHandler: completionHandler)
     }
 }
 
-extension ProductRequest {
-    struct ProductRequest: RequestRouter {
+extension RemoveReviewRequest {
+    struct RemoveReviewRequest: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "product"//"getGoodById.json"
-        let idProduct: Int
+        let path: String = "removeReview"
+        let idReview: Int
         var parameters: Parameters? {
             return [
-                "id_product" : idProduct
+                "id_review" : idReview
             ]
         }
     }    

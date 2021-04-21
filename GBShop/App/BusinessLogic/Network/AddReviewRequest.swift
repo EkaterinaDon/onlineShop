@@ -1,14 +1,14 @@
 //
-//  ProductRequest.swift
+//  AddReviewRequest.swift
 //  GBShop
 //
-//  Created by Ekaterina on 14.04.21.
+//  Created by Ekaterina on 21.04.21.
 //
 
 import Foundation
 import Alamofire
 
-class ProductRequest: AbstractRequestFactory {
+class AddReviewRequest: AbstractRequestFactory {
     let errorParser: AbstractErrorParser
     let sessionManager: Session
     let queue: DispatchQueue
@@ -23,24 +23,29 @@ class ProductRequest: AbstractRequestFactory {
         self.queue = queue
         self.baseUrl = baseUrl
     }
+    
 }
 
-extension ProductRequest: ProductRequestFactory {
-    func getProductBy(id: Int, completionHandler: @escaping (AFDataResponse<ProductResult>) -> Void) {
-        let requestModel = ProductRequest(baseUrl: baseUrl, idProduct: id)
+extension AddReviewRequest: AddReviewRequestFactory {
+    func addReview(idUser: Int, idProduct: Int, text: String, completionHandler: @escaping (AFDataResponse<AddReviewResult>) -> Void) {
+        let requestModel = AddReviewRequest(baseUrl: baseUrl, idUser: idUser, idProduct: idProduct, text: text)
         self.request(request: requestModel, completionHandler: completionHandler)
     }
 }
 
-extension ProductRequest {
-    struct ProductRequest: RequestRouter {
+extension AddReviewRequest {
+    struct AddReviewRequest: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "product"//"getGoodById.json"
+        let path: String = "addReview"
+        let idUser: Int
         let idProduct: Int
+        let text: String
         var parameters: Parameters? {
             return [
-                "id_product" : idProduct
+                "id_user" : idUser,
+                "id_product" : idProduct,
+                "text" : text
             ]
         }
     }    

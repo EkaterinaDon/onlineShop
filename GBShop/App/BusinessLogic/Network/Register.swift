@@ -36,8 +36,8 @@ extension Register: RegisterRequestFactory {
 extension Register {
     struct Registration: RequestRouter {
         let baseUrl: URL
-        let method: HTTPMethod = .get
-        let path: String = "registerUser.json"
+        let method: HTTPMethod = .post
+        let path: String = "register"//"registerUser.json"
         
         let login: String
         let password: String

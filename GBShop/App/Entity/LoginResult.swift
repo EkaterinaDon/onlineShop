@@ -9,18 +9,21 @@ import Foundation
 
 struct LoginResult: Codable {
     let result: Int
-    let user: User
+    let user_message: String
+    //let user: User
 }
 
 struct RegisterResult: Codable {
     let result: Int
-    let userMessage: String
+    let user_message: String
 }
 
 struct ChangeDataResult: Codable {
     let result: Int
+    let user_message: String
 }
 
 struct LogoutResult: Codable {
     let result: Int
+    let user_message: String
 }

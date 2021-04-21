@@ -23,7 +23,9 @@ class RequestFactory {
     }()
     
     let sessionQueue = DispatchQueue.global(qos: .utility)
-    let baseUrl = URL(string: "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/")!
+    //let baseUrl = URL(string: "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/")!
+    let baseUrl = URL(string: "https://warm-meadow-16353.herokuapp.com/")!
+    //let baseUrl = URL(string: "http://127.0.0.1:8080/")!
     func makeAuthRequestFactory() -> AuthRequestFactory {
         let errorParser = makeErrorParser()
         return Auth(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
@@ -49,9 +51,23 @@ class RequestFactory {
         return CatalogData(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
     
-    
     func makeProductRequestFactory() -> ProductRequestFactory {
         let errorParser = makeErrorParser()
         return ProductRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
+    }
+    
+    func makeGetReviewsRequestFatory() -> ReviewsRequestFactory {
+        let errorParser = makeErrorParser()
+        return ReviewsRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
+    }
+    
+    func makeAddReviewRequestFatory() -> AddReviewRequestFactory {
+        let errorParser = makeErrorParser()
+        return AddReviewRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
+    }
+    
+    func makeRemoveReviewRequestFatory() -> RemoveReviewRequestFactory {
+        let errorParser = makeErrorParser()
+        return RemoveReviewRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
 }

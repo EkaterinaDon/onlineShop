@@ -1,19 +1,21 @@
 //
-//  ProductRequest.swift
+//  ReviewsRequest.swift
 //  GBShop
 //
-//  Created by Ekaterina on 14.04.21.
+//  Created by Ekaterina on 21.04.21.
 //
 
 import Foundation
 import Alamofire
 
-class ProductRequest: AbstractRequestFactory {
+class ReviewsRequest: AbstractRequestFactory {
+    
     let errorParser: AbstractErrorParser
     let sessionManager: Session
     let queue: DispatchQueue
     let baseUrl: URL
-        
+    
+    
     init(errorParser: AbstractErrorParser,
          sessionManager: Session,
          queue: DispatchQueue = DispatchQueue.global(qos: .utility),
@@ -23,24 +25,27 @@ class ProductRequest: AbstractRequestFactory {
         self.queue = queue
         self.baseUrl = baseUrl
     }
+    
 }
 
-extension ProductRequest: ProductRequestFactory {
-    func getProductBy(id: Int, completionHandler: @escaping (AFDataResponse<ProductResult>) -> Void) {
-        let requestModel = ProductRequest(baseUrl: baseUrl, idProduct: id)
+extension ReviewsRequest: ReviewsRequestFactory {
+    func getReviews(idProduct: Int, pageNumber: Int, completionHandler: @escaping (AFDataResponse<ReviewsResult>) -> Void) {
+        let requestModel = ReviewsRequest(baseUrl: baseUrl, idProduct: idProduct, pageNumber: pageNumber)
         self.request(request: requestModel, completionHandler: completionHandler)
     }
 }
 
-extension ProductRequest {
-    struct ProductRequest: RequestRouter {
+extension ReviewsRequest {    
+    struct ReviewsRequest: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "product"//"getGoodById.json"
+        let path: String = "reviews"
         let idProduct: Int
+        let pageNumber: Int
         var parameters: Parameters? {
             return [
-                "id_product" : idProduct
+                "id_product" : idProduct,
+                "page_number" : pageNumber
             ]
         }
     }    
