@@ -56,18 +56,33 @@ class RequestFactory {
         return ProductRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
     
-    func makeGetReviewsRequestFatory() -> ReviewsRequestFactory {
+    func makeGetReviewsRequestFactory() -> ReviewsRequestFactory {
         let errorParser = makeErrorParser()
         return ReviewsRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
     
-    func makeAddReviewRequestFatory() -> AddReviewRequestFactory {
+    func makeAddReviewRequestFactory() -> AddReviewRequestFactory {
         let errorParser = makeErrorParser()
         return AddReviewRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
     }
     
-    func makeRemoveReviewRequestFatory() -> RemoveReviewRequestFactory {
+    func makeRemoveReviewRequestFactory() -> RemoveReviewRequestFactory {
         let errorParser = makeErrorParser()
         return RemoveReviewRequest(errorParser: errorParser, sessionManager: commonSession, queue: sessionQueue, baseUrl: baseUrl)
+    }
+    
+    func makeAddToBasketRequestFactory() -> AddToBasketRequestFactory {
+        let errorParser = makeErrorParser()
+        return AddToBasketRequest(errorParser: errorParser, sessionManager: commonSession, baseUrl: baseUrl)
+    }
+    
+    func makeRemoveFromBasketRequestFactory() -> RemoveFromBasketRequestFactory {
+        let errorParser = makeErrorParser()
+        return RemoveFromBasketRequest(errorParser: errorParser, sessionManager: commonSession, baseUrl: baseUrl)
+    }
+    
+    func makePayBasketRequestFactory() -> PayBasketRequestFactory {
+        let errorParser = makeErrorParser()
+        return PayBasketRequest(errorParser: errorParser, sessionManager: commonSession, baseUrl: baseUrl)
     }
 }
