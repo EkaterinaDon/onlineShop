@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        let reviews = requestFactory.makeGetReviewsRequestFatory()
+        let reviews = requestFactory.makeGetReviewsRequestFactory()
         reviews.getReviews(idProduct: 123, pageNumber: 1) { (response) in
             switch response.result {
             case .success(let reviews):
@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        let addReview = requestFactory.makeAddReviewRequestFatory()
+        let addReview = requestFactory.makeAddReviewRequestFactory()
         addReview.addReview(idUser: 123, idProduct: 123, text: "Текст отзыва") { (response) in
             switch response.result {
             case .success(let review):
@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        let removeReview = requestFactory.makeRemoveReviewRequestFatory()
+        let removeReview = requestFactory.makeRemoveReviewRequestFactory()
         removeReview.removeReview(id: 123) { (response) in
             switch response.result {
             case .success(let review):
@@ -105,7 +105,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error.localizedDescription)
             }
         }
+        
+        let addToBasket = requestFactory.makeAddToBasketRequestFactory()
+        addToBasket.addToBasket(idProduct: 123, quantity: 2) { (response) in
+            switch response.result {
+            case .success(let addSuccess):
+                print(addSuccess)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        let removeFromBasket = requestFactory.makeRemoveFromBasketRequestFactory()
+        removeFromBasket.removeFromBasket(idProduct: 123, quantity: 2) { (response) in
+            switch response.result {
+            case .success(let removeSuccess):
+                print(removeSuccess)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
 
+        let payBasket = requestFactory.makePayBasketRequestFactory()
+        payBasket.payBasket(idProduct: 123, quantity: 1, totalSum: 100) { (response) in
+            switch response.result {
+            case .success(let paymentSuccess):
+                print(paymentSuccess)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         return true
     }
 

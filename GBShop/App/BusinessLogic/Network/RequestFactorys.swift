@@ -44,3 +44,15 @@ protocol AddReviewRequestFactory {
 protocol RemoveReviewRequestFactory {
     func removeReview(id: Int, completionHandler: @escaping (AFDataResponse<RemoveReviewResult>) -> Void)
 }
+
+protocol AddToBasketRequestFactory {
+    func addToBasket(idProduct: Int, quantity: Int, completionHandler: @escaping (AFDataResponse<AddToBasketResult>) -> Void)
+}
+
+protocol RemoveFromBasketRequestFactory {
+    func removeFromBasket(idProduct: Int, quantity: Int, completionHandler: @escaping (AFDataResponse<RemoveFromBasketResult>) -> Void)
+}
+
+protocol PayBasketRequestFactory {
+    func payBasket(idProduct: Int, quantity: Int, totalSum: Int, completionHandler: @escaping (AFDataResponse<PayBasketResult>) -> Void)
+}

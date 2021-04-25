@@ -122,7 +122,7 @@ class GBShopTests: XCTestCase {
     func testGetReviews() {
         let expectation = self.expectation(description: "Получение списка отзывов")
         let requestFactory = RequestFactory()
-        let reviews = requestFactory.makeGetReviewsRequestFatory()
+        let reviews = requestFactory.makeGetReviewsRequestFactory()
         reviews.getReviews(idProduct: 123, pageNumber: 1) { response in
             switch response.result {
             case .success(let reviews):
@@ -138,7 +138,7 @@ class GBShopTests: XCTestCase {
     func testAddReview() {
         let expectation = self.expectation(description: "Добавление отзыва")
         let requestFactory = RequestFactory()
-        let addReview = requestFactory.makeAddReviewRequestFatory()
+        let addReview = requestFactory.makeAddReviewRequestFactory()
         addReview.addReview(idUser: 123, idProduct: 123, text: "Текст отзыва") { response in
             switch response.result {
             case .success(let review):
@@ -154,7 +154,7 @@ class GBShopTests: XCTestCase {
     func testRemoveReview() {
         let expectation = self.expectation(description: "Удаление отзыва")
         let requestFactory = RequestFactory()
-        let aremoveReview = requestFactory.makeRemoveReviewRequestFatory()
+        let aremoveReview = requestFactory.makeRemoveReviewRequestFactory()
         aremoveReview.removeReview(id: 123) { response in
             switch response.result {
             case .success(let review):
@@ -167,4 +167,51 @@ class GBShopTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
+    func testAddToBasket() {
+        let expectation = self.expectation(description: "Добавление товара в корзину")
+        let requestFactory = RequestFactory()
+        let addToBasket = requestFactory.makeAddToBasketRequestFactory()
+        addToBasket.addToBasket(idProduct: 123, quantity: 2) { (response) in
+            switch response.result {
+            case .success(let add):
+                XCTAssertEqual(add.result, 1)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testRemoveFromBasket() {
+        let expectation = self.expectation(description: "Удаление товара из корзины")
+        let requestFactory = RequestFactory()
+        let removeFromBasket = requestFactory.makeRemoveFromBasketRequestFactory()
+        removeFromBasket.removeFromBasket(idProduct: 123, quantity: 1) { (response) in
+            switch response.result {
+            case .success(let remove):
+                XCTAssertEqual(remove.result, 1)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testPayBasket() {
+        let expectation = self.expectation(description: "Оплата товаров в корзине")
+        let requestFactory = RequestFactory()
+        let payBasket = requestFactory.makePayBasketRequestFactory()
+        payBasket.payBasket(idProduct: 123, quantity: 2, totalSum: 100) { (response) in
+            switch response.result {
+            case .success(let payment):
+                XCTAssertEqual(payment.result, 1)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
 }
