@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let auth = requestFactory.makeAuthRequestFatory()
+        let auth = requestFactory.makeAuthRequestFactory()
         auth.login(userName: "Somebody", password: "mypassword") { response in
             switch response.result {
             case .success(let login):
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let register = requestFactory.makeRegisterRequestFatory()
+        let register = requestFactory.makeRegisterRequestFactory()
         register.registration(userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: "m", cardNumber: "9872389-2424-234224-234", comment: "Hello") { response in
             switch response.result {
             case .success(let register):
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        let changeData = requestFactory.makeChangeDataRequestFatory()
+        let changeData = requestFactory.makeChangeDataRequestFactory()
         changeData.changeData(userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: "m", cardNumber: "9872389-2424-234224-234", comment: "Hello") { response in
             switch response.result {
             case .success(let changed):
@@ -46,11 +46,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let logout = requestFactory.makeLogoutRequestFatory()
+        let logout = requestFactory.makeLogoutRequestFactory()
         logout.logout(id: 123) { response in
             switch response.result {
             case .success(let logout):
                 print(logout)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        let catalog = requestFactory.makeCatalogDataRequestFactory()
+        catalog.getCatalogData(pageNumber: 1, idCategory: 1) { response in
+            switch response.result {
+            case .success(let catalog):
+                print(catalog)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        let product = requestFactory.makeProductRequestFactory()
+        product.getProductBy(id: 123) { (response) in
+            switch response.result {
+            case .success(let product):
+                print(product)
             case .failure(let error):
                 print(error.localizedDescription)
             }
