@@ -56,15 +56,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        let catalog = requestFactory.makeCatalogDataRequestFactory()
-        catalog.getCatalogData(pageNumber: 1, idCategory: 1) { response in
-            switch response.result {
-            case .success(let catalog):
-                print(catalog)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+//        let catalog = requestFactory.makeCatalogDataRequestFactory()
+//        catalog.getCatalogData(pageNumber: 1, idCategory: 1) { response in
+//            switch response.result {
+//            case .success(let catalog):
+//                print(catalog)
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
 
         let product = requestFactory.makeProductRequestFactory()
         product.getProductBy(id: 123) { (response) in

@@ -27,7 +27,9 @@ class AddToBasketRequest: AbstractRequestFactory {
 }
 
 extension AddToBasketRequest: AddToBasketRequestFactory {
-    func addToBasket(idProduct: Int, quantity: Int, completionHandler: @escaping (AFDataResponse<AddToBasketResult>) -> Void) {
+    func addToBasket(idProduct: Int,
+                     quantity: Int,
+                     completionHandler: @escaping (AFDataResponse<AddToBasketResult>) -> Void) {
         let requestModel = AddToBasketRequest(baseUrl: baseUrl, idProduct: idProduct, quantity: quantity)
         self.request(request: requestModel, completionHandler: completionHandler)
     }

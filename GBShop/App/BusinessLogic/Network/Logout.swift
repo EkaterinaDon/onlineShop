@@ -37,7 +37,7 @@ extension Logout {
     struct Exit: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "logout"//"logout.json"
+        let path: String = "logout"
         
         let id: Int
         var parameters: Parameters? {

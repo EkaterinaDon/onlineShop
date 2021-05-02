@@ -27,7 +27,9 @@ class Auth: AbstractRequestFactory {
 }
 
 extension Auth: AuthRequestFactory {
-    func login(userName: String, password: String, completionHandler: @escaping (AFDataResponse<LoginResult>) -> Void) {
+    func login(userName: String,
+               password: String,
+               completionHandler: @escaping (AFDataResponse<LoginResult>) -> Void) {
         let requestModel = Login(baseUrl: baseUrl, login: userName, password: password)
         self.request(request: requestModel, completionHandler: completionHandler)
     }
@@ -37,7 +39,7 @@ extension Auth {
     struct Login: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "login"//"login.json"        
+        let path: String = "login"  
         let login: String
         let password: String
         var parameters: Parameters? {
