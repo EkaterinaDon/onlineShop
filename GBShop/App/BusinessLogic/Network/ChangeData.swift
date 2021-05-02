@@ -27,17 +27,30 @@ class ChangeData: AbstractRequestFactory {
 }
 
 extension ChangeData: ChangeDataRequestFactory {
-    func changeData(userName: String, password: String, email : String, gender: String, cardNumber: String, comment: String, completionHandler: @escaping (AFDataResponse<ChangeDataResult>) -> Void) {
-        let requestModel = Changer(baseUrl: baseUrl, login: userName, password: password, id: Int.random(in: 1..<10000), email: email, gender: gender, cardNumber: cardNumber, comment: comment)
+    func changeData(userName: String,
+                    password: String,
+                    email : String,
+                    gender: String,
+                    cardNumber: String,
+                    comment: String,
+                    completionHandler: @escaping (AFDataResponse<ChangeDataResult>) -> Void) {
+        let requestModel = Change(baseUrl: baseUrl,
+                                  login: userName,
+                                  password: password,
+                                  id: Int.random(in: 1..<10000),
+                                  email: email,
+                                  gender: gender,
+                                  cardNumber: cardNumber,
+                                  comment: comment)
         self.request(request: requestModel, completionHandler: completionHandler)
     }
 }
 
 extension ChangeData {
-    struct Changer: RequestRouter {
+    struct Change: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "changeUserData"//"changeUserData.json"
+        let path: String = "changeUserData"
         
         let login: String
         let password: String

@@ -29,7 +29,9 @@ class ReviewsRequest: AbstractRequestFactory {
 }
 
 extension ReviewsRequest: ReviewsRequestFactory {
-    func getReviews(idProduct: Int, pageNumber: Int, completionHandler: @escaping (AFDataResponse<ReviewsResult>) -> Void) {
+    func getReviews(idProduct: Int,
+                    pageNumber: Int,
+                    completionHandler: @escaping (AFDataResponse<ReviewsResult>) -> Void) {
         let requestModel = ReviewsRequest(baseUrl: baseUrl, idProduct: idProduct, pageNumber: pageNumber)
         self.request(request: requestModel, completionHandler: completionHandler)
     }

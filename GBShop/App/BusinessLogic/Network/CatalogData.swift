@@ -27,7 +27,9 @@ class CatalogData: AbstractRequestFactory {
 }
 
 extension CatalogData: CatalogDataRequestFactory {
-    func getCatalogData(pageNumber: Int, idCategory: Int, completionHandler: @escaping (AFDataResponse<CatalogDataResult>) -> Void) {
+    func getCatalogData(pageNumber: Int,
+                        idCategory: Int,
+                        completionHandler: @escaping (AFDataResponse<CatalogDataResult>) -> Void) {
         let requestModel = CatalogData(baseUrl: baseUrl, pageNumber: pageNumber, idCategory: idCategory)        
         self.request(request: requestModel, completionHandler: completionHandler)
     }
@@ -37,7 +39,7 @@ extension CatalogData {
     struct CatalogData: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "catalogData"//"catalogData.json"
+        let path: String = "catalogData"
         let pageNumber: Int
         let idCategory: Int
         var parameters: Parameters? {

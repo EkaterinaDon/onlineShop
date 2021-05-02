@@ -36,7 +36,7 @@ extension ProductRequest {
     struct ProductRequest: RequestRouter {
         let baseUrl: URL
         let method: HTTPMethod = .post
-        let path: String = "product"//"getGoodById.json"
+        let path: String = "product"
         let idProduct: Int
         var parameters: Parameters? {
             return [
