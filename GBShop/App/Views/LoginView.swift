@@ -8,6 +8,31 @@
 import UIKit
 
 class LoginView: UIView {
+    
+    // MARK: - Properties
+    
+    private lazy var contentViewSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 800)
+    
+    // MARK: - ScrollView
+    
+    private(set) lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.backgroundColor = .white
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.autoresizingMask = .flexibleHeight
+        scrollView.bounces = true
+        scrollView.contentSize = contentViewSize
+        return scrollView
+    }()
+
+    private(set) lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.backgroundColor = .white
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.frame.size = contentViewSize
+        contentView.isUserInteractionEnabled = true
+        return contentView
+    }()
 
     // MARK: - Subviews
     
@@ -73,37 +98,53 @@ class LoginView: UIView {
     // MARK: - UI
     
     private func configureUI() {
-        self.backgroundColor = .white
-        self.addSubview(self.nameLabel)
-        self.addSubview(self.loginTextField)
-        self.addSubview(self.passwordTextField)
-        self.addSubview(self.loginButton)
-        self.addSubview(self.registrationButton)
+        self.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.contentView)
+        
+        self.contentView.addSubview(self.nameLabel)
+        self.contentView.addSubview(self.loginTextField)
+        self.contentView.addSubview(self.passwordTextField)
+        self.contentView.addSubview(self.loginButton)
+        self.contentView.addSubview(self.registrationButton)
+        
+        setupConstraintsScrollView()
         setupConstraints()
     }
     
-    private func setupConstraints() {
+    // MARK: - Constraints
+    
+    private func setupConstraintsScrollView() {
         let safeArea = self.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            self.scrollView.widthAnchor.constraint(equalTo: safeArea.widthAnchor),
+            self.scrollView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, constant: 400.0),
+            
+            self.contentView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor),
+            self.contentView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor)
+        ])
+    }
+    
+    private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            self.nameLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 30.0),
-            self.nameLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            self.nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 30.0),
+            self.nameLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.nameLabel.widthAnchor.constraint(equalToConstant: 200.0),
             
-            self.loginTextField.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
-            self.loginTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 5.0),
-            self.loginTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -5.0),
+            self.loginTextField.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: 300.0),
+            self.loginTextField.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5.0),
+            self.loginTextField.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5.0),
             
             self.passwordTextField.topAnchor.constraint(equalTo: self.loginTextField.bottomAnchor, constant: 4.0),
-            self.passwordTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 5.0),
-            self.passwordTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -5.0),
+            self.passwordTextField.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5.0),
+            self.passwordTextField.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5.0),
 
             self.registrationButton.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: 2.0),
-            self.registrationButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 5.0),
+            self.registrationButton.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5.0),
             self.registrationButton.widthAnchor.constraint(equalToConstant: 150.0),
             
             self.loginButton.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: 40.0),
-            self.loginButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            self.loginButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.loginButton.widthAnchor.constraint(equalToConstant: 250.0)
             ])
     }
