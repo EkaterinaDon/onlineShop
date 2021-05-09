@@ -1,13 +1,13 @@
 //
-//  ProductsViewController.swift
+//  ReviewsViewController.swift
 //  GBShop
 //
-//  Created by Ekaterina on 2.05.21.
+//  Created by Ekaterina on 7.05.21.
 //
 
 import UIKit
 
-class ProductsViewController: UIViewController {
+class ReviewsViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -17,15 +17,16 @@ class ProductsViewController: UIViewController {
     }
     
     let requestFactory = RequestFactory()
-    var products : CatalogDataResult?
+    var product: Product!
+    var reviews: [Review] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addTableView()
-        getProductsList()
+        getReviewsList()
         
-        navigationItem.title = "Каталог товаров"
+        navigationItem.title = "Список отзывов о товаре"
     }
     
     // MARK: - UI
@@ -39,23 +40,23 @@ class ProductsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ProductsTableViewCell.self, forCellReuseIdentifier: Constants.reuseIdentifier)
-        self.view.addSubview(tableView)        
+        self.view.addSubview(tableView)
     }
     
     // MARK: - Methods
     
-    func getProductsList() {
-        let products = requestFactory.makeCatalogDataRequestFactory()
-        products.getCatalogData(pageNumber: 3, idCategory: 1) { response in
+    func getReviewsList() {
+        let reviewsRequest = requestFactory.makeGetReviewsRequestFactory()
+        reviewsRequest.getReviews(idProduct: product.id, pageNumber: 1) { (response) in
             switch response.result {
             case .success(let result):
                 DispatchQueue.main.async {
-                    self.products = result
+                    self.reviews = result.reviews
                     self.tableView.reloadData()
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.showAlert(title: "Ошибка загрузки каталога!", message: error.errorDescription ?? "")
+                    self.showAlert(title: "Ошибка загрузки отзывов!", message: error.errorDescription ?? "")
                 }
             }
         }
@@ -64,9 +65,9 @@ class ProductsViewController: UIViewController {
 
 //MARK: - UITableViewDataSource, UITableViewDelegate
 
-extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
+extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        products?.count ?? 0
+        reviews.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,16 +75,14 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = dequeuedCell as? ProductsTableViewCell else {
             return dequeuedCell
         }
-        if let products = products {
-            cell.configureCell(for: products[indexPath.row])
-        }
+        
+        cell.nameLabel.text = reviews[indexPath.row].userName
+        cell.priceLabel.text = reviews[indexPath.row].text
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let productViewController = ProductViewController()
-        productViewController.product = products![indexPath.row]
-        navigationController?.pushViewController(productViewController, animated: true)
         
     }
 }

@@ -66,25 +66,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
 //        }
 
-        let product = requestFactory.makeProductRequestFactory()
-        product.getProductBy(id: 123) { (response) in
-            switch response.result {
-            case .success(let product):
-                print(product)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+//        let product = requestFactory.makeProductRequestFactory()
+//        product.getProductBy(id: 123) { (response) in
+//            switch response.result {
+//            case .success(let product):
+//                print(product)
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
 
-        let reviews = requestFactory.makeGetReviewsRequestFactory()
-        reviews.getReviews(idProduct: 123, pageNumber: 1) { (response) in
-            switch response.result {
-            case .success(let reviews):
-                print(reviews)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+//        let reviews = requestFactory.makeGetReviewsRequestFactory()
+//        reviews.getReviews(idProduct: 123, pageNumber: 1) { (response) in
+//            switch response.result {
+//            case .success(let reviews):
+//                print(reviews)
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
 
         let addReview = requestFactory.makeAddReviewRequestFactory()
         addReview.addReview(idUser: 123, idProduct: 123, text: "Текст отзыва") { (response) in
