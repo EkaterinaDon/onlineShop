@@ -33,6 +33,7 @@ class LoginViewController: UIViewController {
     // MARK: - Metods
     
     @objc func loginButtonDidTap() {
+        //fatalError() //сбой для крашлитика
         guard let login = loginView.loginTextField.text, let password = loginView.passwordTextField.text else {
             loginView.loginTextField.isError(baseColor: UIColor.gray.cgColor, numberOfShakes: 3, revert: true)
             return
