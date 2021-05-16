@@ -52,6 +52,7 @@ class ProfileView: UIView {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 15.0)
         textField.placeholder = "Логин / Имя пользователя"
+        textField.accessibilityIdentifier = "usersLogin"
         return textField
     }()
     
@@ -62,6 +63,7 @@ class ProfileView: UIView {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 15.0)
         textField.placeholder = "Пароль"
+        textField.accessibilityIdentifier = "usersPassword"
         return textField
     }()
     
@@ -72,6 +74,7 @@ class ProfileView: UIView {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 15.0)
         textField.placeholder = "Почта"
+        textField.accessibilityIdentifier = "email"
         return textField
     }()
     
@@ -82,6 +85,7 @@ class ProfileView: UIView {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 15.0)
         textField.placeholder = "Пол"
+        textField.accessibilityIdentifier = "gender"
         return textField
     }()
     
@@ -92,6 +96,7 @@ class ProfileView: UIView {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 15.0)
         textField.placeholder = "Номер карты"
+        textField.accessibilityIdentifier = "cardNumber"
         return textField
     }()
     
@@ -113,6 +118,7 @@ class ProfileView: UIView {
         textView.layer.borderColor = UIColor.lightGray.cgColor
         textView.textColor = .black
         textView.font = UIFont.systemFont(ofSize: 15.0)
+        textView.accessibilityIdentifier = "bio"
         return textView
     }()
     
@@ -121,6 +127,7 @@ class ProfileView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15.0)
+        button.accessibilityIdentifier = "save"
         return button
     }()
     
@@ -139,6 +146,7 @@ class ProfileView: UIView {
     // MARK: - UI
     
     private func configureUI() {
+        accessibilityIdentifier = "Profile"
         self.addSubview(self.scrollView)
         self.scrollView.addSubview(self.contentView)
         

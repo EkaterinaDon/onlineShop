@@ -63,6 +63,16 @@ class ProductView: UIView {
         button.setTitleColor(.black, for: .normal)
         return button
     }()
+    
+    private(set) lazy var showBasketButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Посмотреть корзину", for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 12.0)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -85,6 +95,7 @@ class ProductView: UIView {
         self.addSubview(self.descriptionLabel)
         self.addSubview(self.showReviewButton)
         self.addSubview(self.addToBasketButton)
+        self.addSubview(self.showBasketButton)
 
         setupConstraints()
     }
@@ -119,9 +130,13 @@ class ProductView: UIView {
             self.showReviewButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             self.showReviewButton.widthAnchor.constraint(equalToConstant: 250.0),
             
-            self.addToBasketButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -50.0),
+            self.addToBasketButton.bottomAnchor.constraint(equalTo: self.showBasketButton.topAnchor, constant: -10.0),
             self.addToBasketButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            self.addToBasketButton.widthAnchor.constraint(equalToConstant: 250.0)
+            self.addToBasketButton.widthAnchor.constraint(equalToConstant: 250.0),
+            
+            self.showBasketButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -30.0),
+            self.showBasketButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            self.showBasketButton.widthAnchor.constraint(equalToConstant: 250.0)
             ])
     }
 

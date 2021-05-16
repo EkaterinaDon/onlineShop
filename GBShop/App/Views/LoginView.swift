@@ -53,6 +53,7 @@ class LoginView: UIView {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 15.0)
         textField.placeholder = "Имя пользователя"
+        textField.accessibilityIdentifier = "login"
         return textField
     }()
     
@@ -63,6 +64,8 @@ class LoginView: UIView {
         textField.textColor = .black
         textField.font = UIFont.systemFont(ofSize: 15.0)
         textField.placeholder = "Пароль"
+        textField.isSecureTextEntry = true
+        textField.accessibilityIdentifier = "password"
         return textField
     }()
         
@@ -72,6 +75,7 @@ class LoginView: UIView {
         button.setTitle("Войти", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15.0)
         button.setTitleColor(.black, for: .normal)
+        button.accessibilityIdentifier = "enter"
         return button
     }()
     
@@ -81,6 +85,7 @@ class LoginView: UIView {
         button.setTitle("Зарегистрироваться", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 12.0)
         button.setTitleColor(.lightGray, for: .normal)
+        button.accessibilityIdentifier = "register"
         return button
     }()
     // MARK: - Init
@@ -98,6 +103,7 @@ class LoginView: UIView {
     // MARK: - UI
     
     private func configureUI() {
+        accessibilityIdentifier = "Login"
         self.addSubview(self.scrollView)
         self.scrollView.addSubview(self.contentView)
         
