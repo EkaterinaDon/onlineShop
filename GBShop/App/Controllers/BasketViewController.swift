@@ -19,7 +19,7 @@ class BasketViewController: UIViewController {
     }
     
     let requestFactory = RequestFactory()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +28,9 @@ class BasketViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "creditcard.fill"), style: .plain, target: self, action: #selector(payBasket(sender:)))
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
     // MARK: - UI
     
     private func addTableView() {
@@ -100,4 +103,6 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
+
 }

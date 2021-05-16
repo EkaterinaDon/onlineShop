@@ -20,6 +20,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         viewControllers = [
             createTabBarItem(tabBarTitle: "Пользователь", tabBarImage: "user", viewController: LoginViewController()),
             createTabBarItem(tabBarTitle: "Каталог", tabBarImage: "folders", viewController: ProductsViewController()),
+            createTabBarItem(tabBarTitle: "Корзина", tabBarImage: "cart", viewController: BasketViewController())
         ]
     }
     
