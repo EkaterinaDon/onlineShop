@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 var productsInBasket: [Product] = []
 
@@ -52,6 +53,7 @@ class BasketViewController: UIViewController {
             case .success(let paymentSuccess):
                 DispatchQueue.main.async {
                     self.showAlert(title: "Ура!", message: paymentSuccess.message)
+                    Analytics.logEvent(AnalyticsEventEcommercePurchase, parameters: [AnalyticsParameterOrigin: paymentSuccess.message])
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -94,6 +96,7 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
                         productsInBasket.removeAll { $0.id == productToRemove.id }
                         self.tableView.deleteRows(at: [indexPath], with: .fade)
                         self.tableView.endUpdates()
+                        Analytics.logEvent(AnalyticsEventRemoveFromCart, parameters: [AnalyticsParameterCurrency: "\(productToRemove.name)"])
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {

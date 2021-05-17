@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class ProfileViewController: UIViewController {
 
@@ -104,6 +105,7 @@ class ProfileViewController: UIViewController {
             case .success(_):
                 DispatchQueue.main.async {
                     self.showAlert(title: "Ура!", message: "Вы успешно зарегистрировались")
+                    Analytics.logEvent(AnalyticsEventJoinGroup, parameters: [AnalyticsParameterGroupID: "new user"])
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
