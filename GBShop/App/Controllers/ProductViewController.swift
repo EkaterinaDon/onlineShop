@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class ProductViewController: UIViewController {
 
@@ -39,6 +40,7 @@ class ProductViewController: UIViewController {
                     self.productView.nameLabel.text = result.name
                     self.productView.priceLabel.text = "\(result.price)"
                     self.productView.descriptionLabel.text = result.description
+                    Analytics.logEvent(AnalyticsEventSelectItem, parameters: [AnalyticsParameterItemName: "\(result.name)"])
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -63,6 +65,7 @@ class ProductViewController: UIViewController {
                 DispatchQueue.main.async {
                     productsInBasket.append(self.product)
                     self.showAlert(title: "\(self.product.name)", message: add.message)
+                    Analytics.logEvent(AnalyticsEventAddToCart, parameters: [AnalyticsParameterCurrency: "RUB"])
                 }
             case .failure(let error):
                 DispatchQueue.main.async {

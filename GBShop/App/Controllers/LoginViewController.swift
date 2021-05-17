@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class LoginViewController: UIViewController {
 
@@ -33,6 +34,7 @@ class LoginViewController: UIViewController {
     // MARK: - Metods
     
     @objc func loginButtonDidTap() {
+        //fatalError() //сбой для крашлитика
         guard let login = loginView.loginTextField.text, let password = loginView.passwordTextField.text else {
             loginView.loginTextField.isError(baseColor: UIColor.gray.cgColor, numberOfShakes: 3, revert: true)
             return
@@ -61,10 +63,12 @@ class LoginViewController: UIViewController {
             case .success(_):
                 DispatchQueue.main.async {
                     self.goToProfile(isRegister: true)
+                    Analytics.logEvent(AnalyticsEventLogin, parameters: [AnalyticsParameterSuccess: ""])
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.showAlert(title: "Ошибка авторизации", message: error.errorDescription ?? "")
+                    Analytics.logEvent("Login error", parameters: [AnalyticsParameterSuccess: "0"])
                 }
             }
         }

@@ -7,6 +7,9 @@
 
 import UIKit
 
+import Firebase
+import FirebaseAnalytics
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,6 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
+        
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//          AnalyticsParameterItemID: "id",
+//          AnalyticsParameterContentType: "cont"
+//          ])
+
         
 //        let auth = requestFactory.makeAuthRequestFactory()
 //        auth.login(userName: "Somebody", password: "mypassword") { response in
@@ -51,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch response.result {
             case .success(let logout):
                 print(logout)
+                Analytics.logEvent(AnalyticsEventSignUp, parameters: [AnalyticsParameterSignUpMethod: "Logout"])
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -91,6 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch response.result {
             case .success(let review):
                 print(review)
+                Analytics.logEvent("Add review", parameters: [AnalyticsParameterSuccess: ""])
             case.failure(let error):
                 print(error.localizedDescription)
             }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class ProductsViewController: UIViewController {
     
@@ -52,6 +53,7 @@ class ProductsViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.products = result
                     self.tableView.reloadData()
+                    Analytics.logEvent(AnalyticsEventViewItemList, parameters: [AnalyticsParameterSuccess: ""])
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
