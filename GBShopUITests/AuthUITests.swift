@@ -9,12 +9,15 @@ import XCTest
 
 class AuthUITests: XCTestCase {
 
+    let app = XCUIApplication()
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
+        setupSnapshot(app)
+        app.launch()
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
 
@@ -23,8 +26,6 @@ class AuthUITests: XCTestCase {
     }
 
     func testLogin() throws {
-        let app = XCUIApplication()
-        app.launch()
         
         let loginView = app.otherElements["Login"]
         XCTAssertTrue(loginView.waitForExistence(timeout: 1))
@@ -41,10 +42,10 @@ class AuthUITests: XCTestCase {
         passwordField.tap()
         passwordField.typeText("test")
         
-        let loginButton = loginView.buttons["enter"]
-        XCTAssertTrue(loginButton.isHittable)
+        snapshot("LoginScreen")
         
-        loginButton.tap()
+        let loginButton = loginView.buttons["enter"]
+        loginButton.forceTapElement()
         
         let profileView = app.otherElements["Profile"]
         XCTAssertTrue(profileView.waitForExistence(timeout: 10))
@@ -52,8 +53,6 @@ class AuthUITests: XCTestCase {
     }
     
     func testRegister() throws {
-        let app = XCUIApplication()
-        app.launch()
         
         let loginView = app.otherElements["Login"]
         XCTAssertTrue(loginView.waitForExistence(timeout: 1))
@@ -65,7 +64,7 @@ class AuthUITests: XCTestCase {
         
         let profileView = app.otherElements["Profile"]
         XCTAssertTrue(profileView.waitForExistence(timeout: 10))
-    
+        snapshot("ProfileScreen")
     }
 
 }
