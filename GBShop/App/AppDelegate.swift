@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error.localizedDescription)
             }
         }
-        
+
         let register = requestFactory.makeRegisterRequestFactory()
         register.registration(userName: "Somebody", password: "mypassword", email: "some@some.ru", gender: "m", cardNumber: "9872389-2424-234224-234", comment: "Hello") { response in
             switch response.result {
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error.localizedDescription)
             }
         }
-        
+
         let logout = requestFactory.makeLogoutRequestFactory()
         logout.logout(id: 123) { response in
             switch response.result {
@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error.localizedDescription)
             }
         }
-        
+
         let catalog = requestFactory.makeCatalogDataRequestFactory()
         catalog.getCatalogData(pageNumber: 1, idCategory: 1) { response in
             switch response.result {
@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error.localizedDescription)
             }
         }
-        
+
         let product = requestFactory.makeProductRequestFactory()
         product.getProductBy(id: 123) { (response) in
             switch response.result {
@@ -75,7 +75,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error.localizedDescription)
             }
         }
-        
+
+        let reviews = requestFactory.makeGetReviewsRequestFatory()
+        reviews.getReviews(idProduct: 123, pageNumber: 1) { (response) in
+            switch response.result {
+            case .success(let reviews):
+                print(reviews)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
+        let addReview = requestFactory.makeAddReviewRequestFatory()
+        addReview.addReview(idUser: 123, idProduct: 123, text: "Текст отзыва") { (response) in
+            switch response.result {
+            case .success(let review):
+                print(review)
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
+        let removeReview = requestFactory.makeRemoveReviewRequestFatory()
+        removeReview.removeReview(id: 123) { (response) in
+            switch response.result {
+            case .success(let review):
+                print(review)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
         return true
     }
 

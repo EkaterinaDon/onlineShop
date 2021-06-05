@@ -28,7 +28,7 @@ class GBShopTests: XCTestCase {
         auth.login(userName: "123", password: "mypassword") { response in
             switch response.result {
             case .success(let login):
-                XCTAssertEqual(login.user.id, 123)
+                XCTAssertEqual(login.result, 1)
                 expectation.fulfill()
             case .failure(let error):
                 XCTFail(error.localizedDescription)
@@ -111,6 +111,54 @@ class GBShopTests: XCTestCase {
             switch response.result {
             case .success(let product):
                 XCTAssertEqual(product.result, 1)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testGetReviews() {
+        let expectation = self.expectation(description: "Получение списка отзывов")
+        let requestFactory = RequestFactory()
+        let reviews = requestFactory.makeGetReviewsRequestFatory()
+        reviews.getReviews(idProduct: 123, pageNumber: 1) { response in
+            switch response.result {
+            case .success(let reviews):
+                XCTAssert(true, reviews.reviews.description)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testAddReview() {
+        let expectation = self.expectation(description: "Добавление отзыва")
+        let requestFactory = RequestFactory()
+        let addReview = requestFactory.makeAddReviewRequestFatory()
+        addReview.addReview(idUser: 123, idProduct: 123, text: "Текст отзыва") { response in
+            switch response.result {
+            case .success(let review):
+                XCTAssertEqual(review.result, 1)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testRemoveReview() {
+        let expectation = self.expectation(description: "Удаление отзыва")
+        let requestFactory = RequestFactory()
+        let aremoveReview = requestFactory.makeRemoveReviewRequestFatory()
+        aremoveReview.removeReview(id: 123) { response in
+            switch response.result {
+            case .success(let review):
+                XCTAssertEqual(review.result, 1)
                 expectation.fulfill()
             case .failure(let error):
                 XCTFail(error.localizedDescription)

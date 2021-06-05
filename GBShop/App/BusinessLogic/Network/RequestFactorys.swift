@@ -31,3 +31,16 @@ protocol CatalogDataRequestFactory {
 protocol ProductRequestFactory {
     func getProductBy(id: Int, completionHandler: @escaping (AFDataResponse<ProductResult>) -> Void)
 }
+
+protocol ReviewsRequestFactory {
+    func getReviews(idProduct: Int, pageNumber: Int,
+                    completionHandler: @escaping (AFDataResponse<ReviewsResult>) -> Void)
+}
+
+protocol AddReviewRequestFactory {
+    func addReview(idUser: Int, idProduct: Int, text: String, completionHandler: @escaping (AFDataResponse<AddReviewResult>) -> Void)
+}
+
+protocol RemoveReviewRequestFactory {
+    func removeReview(id: Int, completionHandler: @escaping (AFDataResponse<RemoveReviewResult>) -> Void)
+}
