@@ -23,7 +23,6 @@ class RequestFactory {
     }()
     
     let sessionQueue = DispatchQueue.global(qos: .utility)
-    //let baseUrl = URL(string: "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/")!
     let baseUrl = URL(string: "https://warm-meadow-16353.herokuapp.com/")!
     //let baseUrl = URL(string: "http://127.0.0.1:8080/")!
     func makeAuthRequestFactory() -> AuthRequestFactory {
