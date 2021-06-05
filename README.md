@@ -5,7 +5,7 @@
 ## В приложении используются:
 - Alamofire
 - FirebaseAnalytics
-- Unit и UI тесты
+- Unit и UI тесты, Snapshot
 - мок-сервер: 
 https://github.com/EkaterinaDon/VaporForShop
 
